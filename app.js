@@ -1,6 +1,6 @@
 const express = require("express"); // import express
 const app = express(); // create express app
-const puerto = 3000; // Puerto en el que escucha el servidor
+const PORT = process.env.PORT || 3000; // Puerto en el que escucha el servidor
 
 //Motor de Plantillas
 app.set("view engine", "ejs");
