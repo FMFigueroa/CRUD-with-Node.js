@@ -1,6 +1,6 @@
 const express = require("express"); // import express
 const app = express(); // create express app
-const puerto = 3000; // Puerto en el que escucha el servidor
+const PORT = process.env.PORT || 3000; // Puerto en el que escucha el servidor
 
 //Motor de Plantillas
 app.set("view engine", "ejs");
@@ -27,6 +27,6 @@ app.use((req, res, next) => {
 });
 
 // Inicio del servidor
-app.listen(puerto, () => {
-  console.log(`Escuchando Solicitudes en el puerto ${puerto}`); // Mensaje de inicio
+app.listen(PORT, () => {
+  console.log(`Escuchando Solicitudes en el puerto ${PORT}`); // Mensaje de inicio
 });
