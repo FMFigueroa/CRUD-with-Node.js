@@ -1,0 +1,31 @@
+<%- include("templates/header", {tab: "dashboard" }) %>
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="text-primary my-5">Dashboard</h1>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Handle</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (heroes.length > 0 ) { %> <% heroes.forEach(heroe => { %>
+            <tr>
+              <th scope="row"><%= heroe.id %></th>
+              <td><%= heroe.name %></td>
+              <td><%= heroe.description %></td>
+              <td>@mdo</td>
+            </tr>
+            <% }) %> <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+<%- include("templates/footer") %>
