@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000; // Puerto en el que escucha el servidor
 //conexion a la base de datos
 const mongoose = require("mongoose");
 
-const uri = `mongodb+srv://${process.env.USER}:${process.env.KEY}@cluster1.e1jyf.mongodb.net/${process.env.DB}?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@cluster1.e1jyf.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 mongoose
   .connect(uri, {
