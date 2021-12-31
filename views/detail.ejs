@@ -1,0 +1,144 @@
+<%- include("templates/header", {tab: "Detail Heroe" }) %>
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="text-primary my-5">Vista de Detalle</h1>
+        <a class="btn btn-secondary" href="/dashboard"> GoBack </a>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <h1 class="text-secondary">SuperHeroe</h1>
+        <% if (error) { %>
+        <div
+          class="alert alert-warning alert-dismissible fade show"
+          role="alert"
+        >
+          <strong>Lo siento!</strong><%= message %>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+        <% } else { %>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= heroe.name %>
+            </h5>
+            <p class="card-text">
+              <%= heroe.description %>
+            </p>
+            <div class="d-flex justify-content-center gap-3">
+            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Editar
+            </button> 
+            <button class="btn btn-danger btn-sm" data-id="<%= heroe.id %>">
+              delete
+            </button>
+            </div>
+          </div>
+         <% } %>
+      </div>
+    </div>
+  </div>
+</main>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">SuperHeroe <%= heroe.name %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id= "formUpdate" data-id="<%= heroe.id %>">
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Name:</label>
+            <input 
+            type="text" 
+            class="form-control" 
+            name="name" 
+            value= "<%= heroe.name%>" 
+            placeholder="name"
+            id="nameInput"
+            >
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Description:</label>
+            <input 
+            type="text" 
+            class="form-control" 
+            name="description"
+            value= "<%= heroe.description%>" 
+            placeholder="<%= heroe.description%>"
+            id="descriptionInput"
+            >
+          </div> 
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include("templates/footer") %>
+
+<script>
+  const btnDelete = document.querySelector(".btn-danger");
+  btnDelete.addEventListener("click", async () => {
+    const id = btnDelete.dataset.id;
+    console.log(id);
+    const url = `/dashboard/${btnDelete.dataset.id}`;
+    try {
+      const data = await fetch(url, {
+        method: "delete",
+      });
+      const res = await data.json();
+      if (res.estado) {
+        console.log(res.message);
+        window.location.href = "/dashboard";
+      } else {
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+
+  const heroeUpdate = document.querySelector("#formUpdate");
+  heroeUpdate.addEventListener("submit", async (e) => {
+    e.preventDefault();//evita que se recargue la pagina
+    const name = heroeUpdate.elements["name"].value; //obtiene el valor del parametro name
+    const description = document.querySelector("#descriptionInput").value; //document.querySelector("#descriptionInput").value;
+    const id = heroeUpdate.dataset.id;
+    //console.log(id, name, description);
+    const url = `/dashboard/${id}`;
+    try {
+      const data = await fetch(url, {
+        method: "put",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          description
+        }),
+      });
+      const res = await data.json();
+      if (res.estado) {
+        console.log(res.message);
+        window.location.href = "/dashboard";
+      } else {
+        console.log(res);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }); 
+</script>

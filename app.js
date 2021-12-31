@@ -1,7 +1,14 @@
 const express = require("express"); // import express
+const bodyParser = require("body-parser"); // import body-parser
 const app = express(); // create express app
 
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
+
 require("dotenv").config(); // import dotenv
+
 const PORT = process.env.PORT || 3000; // Puerto en el que escucha el servidor
 
 //conexion a la base de datos
